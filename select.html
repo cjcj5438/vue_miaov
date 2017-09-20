@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>组件</title>
+		
+		<style type="text/css">
+			li{list-style: none;}
+			ul{width: 200px;padding-left:0;}
+			ul li:hover{background-color: blue;}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<h2>自定义下拉框</h2>
+			<my-component btn-value="查询"></my-component>
+			<h2>element.eleme.io<h2>
+			<my-component btn-value="搜索"></my-component>
+		</div>
+		<script src="https://unpkg.com/vue"></script>
+		<script>
+			//想要使用组件, 想要注册组件  ,全局组件
+			Vue.component('my-component', {
+				data:function(){
+					return {selectShow:false}
+				},
+				props:["btnValue"],
+  				template: `<section>
+							<div>
+								<input @click="selectShow=!selectShow" type="text" />
+								<input type="button" :value="btnValue"/>
+								<span>{{btnValue}}</span>
+							</div>
+							<ul v-show="selectShow">
+								<li>hemk+css</li>
+								<li>html+css4</li>
+								<li>javascript</li>
+								<li>angular</li>
+								<li>react</li>
+								<li>vue</li>
+								<li>jquery</li>
+								<li>nodojs</li>
+							</ul>
+						</section>`
+})
+			new Vue({
+				el:'#app',
+				/*局部注册
+				 * components:{
+					'adf':{
+						template:`...`
+					}
+				}*/
+			})
+		</script>
+	</body>
+</html>
