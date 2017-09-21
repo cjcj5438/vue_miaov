@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <custom-component :count="count"></custom-component>
+</div>
+<script>
+    //全局组件
+    Vue.component('custom-component',{
+        props:['count'],
+        data(){//为了不污染全局的count值, 把他放在data里面单独使用
+            return {
+                abcCount:this.count,
+            }
+        },
+        //为了不污染全局的count值, 把他放在data里面单独使用 外还可以使用计算属性
+        computed:{
+            abcCount2(){
+                return this.abcCount;
+            }
+        },
+        template:`
+            <div>
+                <h2>我是一个自定义组件</h2>计算属性{{abcCount2}}data包裹{{abcCount}}
+                <input type="button" value="改变count的值" @click="changeCount">
+            </div>
+        `,
+        methods:{
+            changeCount(){
+                this.abcCount++;
+            }
+        }
+    })
+    new Vue({
+        el:'#app',
+        data:{
+            count:0
+        }
+    })
+</script>
+</body>
+
+</html>
