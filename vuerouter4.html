@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>命名视图</title>
+</head>
+<style>
+    li{float: left;margin-right: 150px}
+</style>
+<body>
+
+<div id="app">
+    <h1>Named Views</h1>
+    <ul>
+        <li>
+            <router-link to="/">/</router-link>
+        </li>
+
+        <li>
+            <router-link to="/other">/other</router-link>
+        </li>
+    </ul>
+    </br>
+    <div>
+        <router-view class="view one"></router-view>
+        <router-view class="view two" name="a"></router-view>
+        <router-view class="view three" name="b"></router-view>
+    </div>
+
+</div>
+
+<script src="vue.js"></script>
+<script src="vue-router.js"></script>
+
+
+</body>
+<script>
+    const Foo = { template: '<div>foo</div>' }
+    const Bar = { template: '<div>bar</div>' }
+    const Baz = { template: '<div>baz</div>' }
+
+    const router = new VueRouter({
+        mode: 'history',
+        routes: [
+            { path: '/',
+                ///一条路由可以定义多个命名组件
+                //将用相应的名称将其呈现到<路由器视图>中。
+                components: {
+                    default: Foo,
+                    a: Bar,
+                    b: Baz
+                }
+            },
+            {
+                path: '/other',
+                components: {
+                    default: Baz,
+                    a: Bar,
+                    b: Foo
+                }
+            }
+        ]
+    })
+
+    new Vue({
+        router,
+        el: '#app'
+    })
+</script>
+</html>

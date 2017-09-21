@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>嵌套路由</title>
+</head>
+<body>
+<div id="app">
+    <p>
+        <router-link to="/user/foo1">/user/foo</router-link>&nbsp;&nbsp;&nbsp;&nbsp;
+        <router-link to="/user/foo2/profile">/user/foo/profile</router-link>&nbsp;&nbsp;&nbsp;&nbsp;
+        <router-link to="/user/foo3/posts">/user/foo/posts</router-link>
+        <router-link :to="{ name: 'bar', params: { id: 123 }}">bar</router-link>
+    </p>
+    <router-view></router-view>
+</div>
+
+<script src="vue.js"></script>
+<script src="vue-router.js"></script>
+<script src="select.js"></script>
+
+</body>
+<script>
+    const User = {
+        template: `
+    <div class="user">
+      <h2>User {{ $route.params.id }}</h2>
+      <h2>{{$route.params}}</h2>
+      <!--<h2>{{$route}}</h2>-->
+      <router-view></router-view>
+    </div>
+  `
+    }
+
+    const UserHome = { template: '<div>Home</div>' }
+    const UserProfile = { template: '<div>Profile</div>' }
+    const UserPosts = { template: '<div>Posts</div>' }
+    const router = new VueRouter({
+        routes: [
+            { path: '/user/:id', component: User,//这里参数放在params里面
+                children: [//嵌套组件,要用children配置
+                    { path: '', component: UserHome },//参数1:路径;参数2:子路由的组件名
+                    { path: 'profile', component: UserProfile },
+                    { path: 'posts', component:UserPosts  }
+                ]
+            }
+        ]
+    })
+    //创建实例挂载, router配置参数注入实例. $mount('#app') 挂在到dom元素上
+    const app = new Vue({ router }).$mount('#app')
+</script>
+</html>
