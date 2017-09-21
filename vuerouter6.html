@@ -6,6 +6,7 @@
 </head>
 <style>
     /*li{float: left;margin-right: 150px}*/
+    /*.slide-right{}*/
 </style>
 <body>
     <div id="app"></div>
@@ -33,6 +34,7 @@
         // dynamically set transition based on route change
         watch: {
             '$route' (to, from) {
+                debugger;
                 const toDepth = to.path.split('/').length
                 const fromDepth = from.path.split('/').length
                 this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
