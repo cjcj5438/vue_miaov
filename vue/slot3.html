@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <h2>自定义组件</h2>
+    <custom>
+        <!--渲染的数据是父组件的数据-->
+        <!--如果要渲染子组件的数据就要在子组件里面渲染 见28行代码-->
+        {{message}}
+    </custom>
+</div>
+<script>
+    //定制模板
+    Vue.component('custom',{
+        data(){
+            return {
+                message:" 我是子组件的数据"
+            }
+        },
+        template:`
+            <div>
+                {{message}}
+                <p>我是第一个提醒</p>
+                <slot></slot>
+            </div>
+        `
+    })
+    new Vue({
+        el:'#app',
+        data:{
+            message:"我是父组件的数据"
+        }
+    })
+</script>
+</body>
+
+</html>

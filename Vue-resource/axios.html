@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios  进行ajax请求,但是还是会报错</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="getCustomers">按钮</button>
+</div>
+<script>
+    var demo = new Vue({
+        el: '#app',
+        data: {
+            list: '',
+            apiUrl: 'http://218.108.93.246:11384/api/UserUI/GetUserPoint'
+        },
+        ready: function () {
+            this.getCustomers()
+        },
+        methods: {
+            getCustomers: function () {
+                axios.get(this.apiUrl, {
+                            params: {userId: 1}
+                        })
+                        .then(function (response) {
+                            console.log(response.config.url+'/?userId='+response.config.params.userId)
+                            console.log(response);
+                            this.list=response.data
+                            console.log(list)
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <h2>自定义组件</h2>
+    <custom>
+        <div slot="one">我是THMl结构1</div>
+        <div slot="three">我是THMl结构3</div>
+        <template slot="two">
+            <div>我是THMl结构2</div>
+            <div>我是THMl结构2</div>
+            <div>我是THMl结构2</div>
+            <div>我是THMl结构2</div>
+            <div>我是THMl结构2</div>
+        </template>
+        <div>替换无name值的div</div>
+    </custom>
+</div>
+<script>
+    //定制模板
+    Vue.component('custom',{
+
+        template:`
+            <div>
+            <slot name="one"><p>这是第1个提醒</p></slot>
+            <slot name="two"><p>这是第2个提醒</p></slot>
+            <slot name="three"><p>这是第3个提醒</p></slot>
+            <slot>无name的div</slot>
+            <slot>无name的div</slot>
+            </div>
+        `
+    })
+    new Vue({
+        el:'#app' 
+    })
+</script>
+</body>
+
+</html>

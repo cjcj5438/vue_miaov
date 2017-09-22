@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/mui/mui.css">
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/mui.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal    modaTitle驼峰要改成串行的名字 -->
+    <m-modal moda-title="我设置的ModaTitle"  data-target="myModal" @on-ok="ok">
+        <ul slot="modal-content">
+            <li v-for="item of list">{{item}}</li>
+        </ul>
+        <!--<div slot="modal-footer">-->
+            <!--<span>确定</span>-->
+            <!--<span>重置</span>-->
+            <!--<input @click="abcd" type="button" class="btn btn-default" data-dismiss="modal" value="Close" />-->
+        <!--</div >-->
+    </m-modal>
+</div>
+
+<script>
+   /**
+    * 设置props:
+    *           modaTitle:提醒信息:默认为这是一个模态框
+    * 定制模板:slot modal-content信息模板
+    *          slot modal-footer 定制底部模板
+    * 监控状态变化:
+    *         事件名 on-ok  点击确定触发
+    *         事件名on-cancel 点击取消触发
+    * */
+   Vue.component('m-modal',{
+       props:{
+           modaTitle:{
+               type:String,
+               default:'默认模态框'
+           },
+           dataTarget:{
+               type:String
+           }
+       },
+       template:`
+<div class="modal fade" :id="dataTarget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{modaTitle}}</h4>
+            </div>
+            <div class="modal-body">
+               <slot name="modal-content"></slot>
+            </div>
+            <div class="modal-footer">
+                <slot name="modal-footer">
+                    <input @click="abc" type="button" class="btn btn-default" data-dismiss="modal" value="Close" />
+                    <input type="button" class="btn btn-primary" value="Save changes" />
+                </slot>
+
+            </div>
+        </div>
+    </div>
+</div>
+       `,
+       methods:{
+           abc(value){
+               this.$emit("on-ok",value)
+           }
+       }
+   })
+   var list= [...'扩展字符'];
+    new Vue({
+        el:"#app",
+        data:{
+            list:list
+        },
+        methods:{
+            ok(value){
+
+                mui.toast("关闭")
+            },
+            abcd(){
+                alert("12342134")
+            }
+
+        }
+    })
+    mui.init({});
+
+    mui(".btn.btn-primary.btn-lg")
+</script>
+</body>
+</html>

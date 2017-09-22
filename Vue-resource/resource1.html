@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用resource请求数据能请求数据单还是会报错</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-resource-develop/vue-resource-develop/dist/vue-resource.js"></script>
+
+</head>
+<body>
+<div id="app" >
+    <button  @click="getCustomers">按钮</button>
+</div>
+<script>
+    var demo = new Vue({
+        el: '#app',
+        data: {
+            list:'',
+            apiUrl: 'http://218.108.93.246:11384/api/UserUI/GetUserPoint'
+        },
+        ready: function() {
+            this.getCustomers()
+        },
+        methods: {
+            getCustomers: function () {
+                this.$http.get(this.apiUrl, {params: {userId: '1'}}).then(response => {
+                    list=response.body[0]
+                }, response => {
+                    console.log(response)
+                });
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

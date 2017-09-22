@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/mui/mui.css">
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/mui.js"></script>
+</head>
+<body>
+<!--这里为什么要 :closeable="false"  这样写. 因为传值的时候是String  要通过v-bind动态绑定-->
+<div id="app">
+    <m-alert type="danger" cicon="menu-left" title="危险"></m-alert>
+    <m-alert type="success" cicon="menu-left" title="成功成功成功" :closeable="false"></m-alert>
+    <m-alert type="info" cicon="menu-left" title="默认" :show-icon="true"></m-alert>
+    <m-alert type="warning" cicon="menu-left" title="注意"></m-alert>
+</div>
+
+<script>
+    /**
+     * alert提醒框的四种状态
+     * alert-success alert-info alert-warning alert-danger
+     * menu-left      menu-right    menu-down   menu-up  添加图标
+     * 设置props:
+     *      type: 提醒框类型,默认info
+     *      title: 提示信息.这里有一个消息提示
+     *      closeable 是否禁闭关闭默认为true
+     *      showIcon 是否显示图标,默认为false
+     *      style 设置提醒框样式,默认{}
+     * 定制模板:
+     *      slot为iconTmp 定制icon模板
+     *      slot为titleTmp 定制提示信息结构
+     * 监控状态变化:
+     *      事件名 close-click 点击X 触发
+     */
+    Vue.component('m-alert',{
+        props:{
+            type:{
+                type:String,
+                default:'info'
+            },
+            cicon:{
+                type:String,
+                default:'info'
+            },
+            title:{
+                type:String,
+                default:''
+            },
+            closeable:{
+                type:Boolean,
+                default:true
+            },
+            showIcon:{
+                type:Boolean,
+                default:false
+            }
+        },
+        computed:{
+              classes(){
+                  return `alert-${this.type}`
+              },
+              iconClass(){
+                    return `glyphicon-${this.cicon}`
+              }
+        },
+        template:`
+         <div :class="[classes]" class="alert alert-dismissible" role="alert">
+            <span v-if="showIcon" class="glyphicon" :class="[iconClass]" aria-hidden="true"></span>
+            <button v-if="!closeable" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{{title}}</strong>
+         </div>`
+    })
+    new Vue({
+        el:"#app"
+    })
+</script>
+</body>
+</html>

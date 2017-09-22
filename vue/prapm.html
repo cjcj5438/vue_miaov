@@ -3,17 +3,32 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <script src="js/vue.js"></script>
+    <script src="../js/vue.js"></script>
 </head>
 
 <body>
 <div id="app">
-    <custom-component :count="count"></custom-component>
+    <h3>父组件使用了count</h3>
+    <!--//最好的方法是子组件通知父组件count 变化-->
+    <p>{{count}}</p>
+    <custom-component :count="count" @increment-click="counthander"></custom-component>
 </div>
 <script>
     //全局组件
     Vue.component('custom-component',{
-        props:['count'],
+        //保证props传入的值为number
+        props:{
+            count:{
+//                type:[Number,String],//参数类型
+//                default:10,//参数默认值
+//                required:true//参数必填
+                //自定义判断方法 必须返回boolear值
+                validator:function(value){
+                    console.log(value)
+                    return true
+                }
+            }
+        },
         data(){//为了不污染全局的count值, 把他放在data里面单独使用
             return {
                 abcCount:this.count,
@@ -34,6 +49,8 @@
         methods:{
             changeCount(){
                 this.abcCount++;
+                //通知父组件发生了改变
+                this.$emit("increment-click")
             }
         }
     })
@@ -41,6 +58,12 @@
         el:'#app',
         data:{
             count:0
+        },
+        methods:{
+            counthander(){//为什么子组件的方法要写在根实例里面
+//                alert("zizujian")
+                this.count++;
+            }
         }
     })
 </script>
