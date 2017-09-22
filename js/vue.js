@@ -3137,7 +3137,7 @@ function initData (vm) {
     data = {};
     "development" !== 'production' && warn(
       'data functions should return an object:\n' +
-      'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function',
+      'https://vuejs.org/v2/guide/components.vue#data-Must-Be-a-Function',
       vm
     );
   }
@@ -4750,7 +4750,7 @@ var namespaceMap = {
 };
 
 var isHTMLTag = makeMap(
-  'html,body,base,head,link,meta,style,title,' +
+  'vue,body,base,head,link,meta,style,title,' +
   'address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,' +
   'div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,' +
   'a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,' +
@@ -5040,7 +5040,7 @@ function createPatchFunction (backend) {
 
   function removeNode (el) {
     var parent = nodeOps.parentNode(el);
-    // element may have already been removed due to v-html / v-text
+    // element may have already been removed due to v-vue / v-text
     if (isDef(parent)) {
       nodeOps.removeChild(parent, el);
     }
@@ -8041,7 +8041,7 @@ var canBeLeftOpenTag = makeMap(
 var isNonPhrasingTag = makeMap(
   'address,article,aside,base,blockquote,body,caption,col,colgroup,dd,' +
   'details,dialog,div,dl,dt,fieldset,figcaption,figure,footer,form,' +
-  'h1,h2,h3,h4,h5,h6,head,header,hgroup,hr,html,legend,li,menuitem,meta,' +
+  'h1,h2,h3,h4,h5,h6,head,header,hgroup,hr,vue,legend,li,menuitem,meta,' +
   'optgroup,option,param,rp,rt,source,style,summary,tbody,td,tfoot,th,thead,' +
   'title,tr,track'
 );
@@ -9406,7 +9406,7 @@ function genFor (
     state.warn(
       "<" + (el.tag) + " v-for=\"" + alias + " in " + exp + "\">: component lists rendered with " +
       "v-for should have explicit keys. " +
-      "See https://vuejs.org/guide/list.html#key for more info.",
+      "See https://vuejs.org/guide/list.vue#key for more info.",
       true /* tip */
     );
   }
@@ -9978,7 +9978,7 @@ Vue$3.prototype.$mount = function (
   /* istanbul ignore if */
   if (el === document.body || el === document.documentElement) {
     "development" !== 'production' && warn(
-      "Do not mount Vue to <html> or <body> - mount to normal elements instead."
+      "Do not mount Vue to <vue> or <body> - mount to normal elements instead."
     );
     return this
   }
