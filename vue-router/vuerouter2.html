@@ -23,11 +23,12 @@
     }
 
     const router = new VueRouter({
+        //这步是定义路由 ,同时挂在到路由实例里面
         routes: [
             { path: '/user/:id', component: User }
         ]
     })
-
+    //挂在到根实例上
     const app = new Vue({ router }).$mount('#app')
 </script>
 </html>
