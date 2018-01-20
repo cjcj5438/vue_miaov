@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由组件 传递props</title>
+</head>
+<body>
+<div id="app">
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</body>
+<script>
+    //$是$route 不是touter
+    const User = {
+        props: ['id'],
+        template: `<div>User0 {{ $route.params.id }}+{{id}}</div>`
+    };
+    const Sideber = {
+        props: ['id'],
+        template: `<div>User1 +{{id}}</div>`
+    };
+    const router = new VueRouter({
+        //这步是定义路由 ,同时挂在到路由实例里面
+        routes: [
+            {path: '/user/:id', component: User, props: true},
+            {
+                path: '/user/:id',
+                component:{defaule:User,sidebar:Sideber},
+                props:{defaule:true,sidebar:false}
+            }
+        ]
+    });
+    const app = new Vue({
+        router
+        , template: `<div id="app">
+    <p>
+        <router-link to="/user/123">/user/foo</router-link>
+    </p>
+    <router-view></router-view>
+</div>`
+    }).$mount('#app')
+</script>
+</html>

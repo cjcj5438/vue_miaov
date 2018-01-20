@@ -24,7 +24,7 @@
     const WithParams = {template: '<div>{{ $route.params.id }}</div>'}
 
     const router = new VueRouter({
-        mode: 'history',
+        mode: 'history',  //mode模式
         base: '/',
         routes: [
             {
@@ -35,17 +35,18 @@
                     {path: 'bar', component: Bar},
                     {path: 'baz', name: 'baz', component: Baz},
                     {path: 'with-params/:id', component: WithParams},
-                    // relative redirect to a sibling route
+                    // relative redirect to a sibling route //固定重定向
                     {path: 'relative-redirect', redirect: 'foo'}
                 ]
             },
-            // absolute redirect
+            // absolute redirect  绝对重定向
             {path: '/absolute-redirect', redirect: '/bar'},
-            // dynamic redirect, note that the target route `to` is available for the redirect function
+            // 动态重定向，请注意目标路由`to`可用于重定向功能 dynamic redirect, note that the target route `to` is available for the redirect function
             {
-                path: '/dynamic-redirect/:id?',
-                redirect: to => {
-                    const {hash, params, query} = to
+                path: '/dynamic-redirect/:id?',//动态重定向
+                redirect: to1 => {
+                    //TODO: hash params query 是什么?
+                    const {hash, params, query} = to1
                     if (query.to === 'foo') {
                         return {path: '/foo', query: null}
                     }
@@ -59,13 +60,13 @@
                     }
                 }
             },
-            // named redirect
+            // named redirect 重命名 重定向  可以用作添加一个重定向
             {path: '/named-redirect', redirect: {name: 'baz'}},
 
-            // redirect with params
+            // redirect with params 用params重定向
             {path: '/redirect-with-params/:id', redirect: '/with-params/:id'},
 
-            // catch all redirect
+            // catch all redirect 监听所用重定向
             {path: '*', redirect: '/'}
         ]
     })
@@ -80,7 +81,7 @@
           /relative-redirect (redirects to /foo)
         </router-link></li>
         <li><router-link to="/relative-redirect?foo=bar">
-          /relative-redirect?foo=bar (redirects to /foo?foo=bar)
+          /relative-redirect?foo=bar (redirects to /foo?foo=bar)   //可以在query上获取到 参数对象
         </router-link></li>
         <li><router-link to="/absolute-redirect">
           /absolute-redirect (redirects to /bar)
@@ -89,13 +90,13 @@
           /dynamic-redirect (redirects to /bar)
         </router-link></li>
         <li><router-link to="/dynamic-redirect/123">
-          /dynamic-redirect/123 (redirects to /with-params/123)
+          /dynamic-redirect/123 (redirects to /with-params/123)  //params 能获取到/:id的 页面传值  获取的方法是": $route.params.id
         </router-link></li>
         <li><router-link to="/dynamic-redirect?to=foo">
           /dynamic-redirect?to=foo (redirects to /foo)
         </router-link></li>
         <li><router-link to="/dynamic-redirect#baz">
-          /dynamic-redirect#baz (redirects to /baz)
+          /dynamic-redirect#baz (redirects to /baz)  //这里怎么获取#baz 的hash值? $router.path
         </router-link></li>
         <li><router-link to="/named-redirect">
           /named-redirect (redirects to /baz)
@@ -111,5 +112,16 @@
     </div>
   `
     }).$mount('#app')
+
+    // this.router 得到router对象
+    // router.path 得到当前的path
+    // router.params 得到包含当前路由路径参数数据的对象
+    // router.query 查询包含当前路由路径查询参数数据的对象
+    // router.name 得到路由的名称
+
+    // router.current Router得到当前路由对象
+    // router.push (localtion)添加一个新的路由
+    // router.replace(localtion) 替换路由
+    // router.back() 返回上一个路由
 </script>
 </html>
